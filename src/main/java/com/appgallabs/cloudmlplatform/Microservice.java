@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
-@Path("/microservice")
+@Path("/ml/microservice")
 public class Microservice
 {
     private static Logger logger = LoggerFactory.getLogger(Microservice.class);
@@ -36,9 +36,9 @@ public class Microservice
             JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
             logger.info(jsonObject.toString());
 
-            jsonObject.addProperty("product", "braineous");
+            jsonObject.addProperty("product", "BRAINEOUS CloudML PLATFORM");
             jsonObject.addProperty("oid", UUID.randomUUID().toString());
-            jsonObject.addProperty("message", "HELLO_TO_HUMANITY");
+            jsonObject.addProperty("message", "HELLO_AI");
 
             return Response.ok(jsonObject.toString()).build();
         }
@@ -57,9 +57,9 @@ public class Microservice
     {
         try {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("product", "braineous");
+            jsonObject.addProperty("product", "BRAINEOUS CloudML PLATFORM");
             jsonObject.addProperty("oid", UUID.randomUUID().toString());
-            jsonObject.addProperty("message", "HELLO_TO_HUMANITY");
+            jsonObject.addProperty("message", "HELLO_AI");
 
             return Response.ok(jsonObject.toString()).build();
         }

@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.annotations.QuarkusMain;
 
-@QuarkusMain
+@QuarkusMain(name="cloudmlplatform")
 public class CloudMLPlatform {
     public static void main(String[] args) throws Exception
     {
