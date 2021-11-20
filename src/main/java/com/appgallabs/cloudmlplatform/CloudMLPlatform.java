@@ -10,7 +10,7 @@ import io.quarkus.runtime.annotations.QuarkusMain;
 public class CloudMLPlatform {
     public static void main(String[] args) throws Exception
     {
-        System.out.println("CloudMLPlatform Started...");
+        System.out.println("Braineous CloudML Platform Started...");
         System.out.println("*******************************");
         System.out.println("STARTING_INGESTION");
         System.out.println("*******************************");
