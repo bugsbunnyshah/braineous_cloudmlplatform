@@ -74,7 +74,7 @@ DataSetList.add(modeloutput);
 //plot on by default
 plotDataset(DataSetList);
 
-Thread.sleep(15000);
+Thread.sleep(7000);
 
 return net;
 
