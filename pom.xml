@@ -164,6 +164,17 @@
       <version>${dl4j-master.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.datavec</groupId>
+      <artifactId>datavec-python</artifactId>
+      <version>1.0.0-beta7</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.nd4j</groupId>
+      <artifactId>nd4j-common</artifactId>
+      <version>1.0.0-beta7</version>
+    </dependency>
+    <dependency>
       <groupId>org.bytedeco</groupId>
       <artifactId>javacv-platform</artifactId>
       <version>1.5.2</version>
