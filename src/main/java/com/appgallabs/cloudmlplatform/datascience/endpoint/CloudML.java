@@ -43,12 +43,10 @@ public class CloudML
                 return Response.status(403).entity(response.toString()).build();
             }
 
-            this.cloudMLService.executeScript(script);
+            JsonObject result = this.cloudMLService.executeScript(script);
 
-            JsonObject success = new JsonObject();
-            success.addProperty("message","script_execution_success");
 
-            return Response.ok(success.toString()).build();
+            return Response.ok(result.toString()).build();
         }
         catch(Exception e)
         {

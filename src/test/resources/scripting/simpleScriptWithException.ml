@@ -52,6 +52,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+println("START_EXECUTION");
+throw new RuntimeException("EXCEPTION_TEST");
+
 def trainingItr = readCSVDataset();
 def ds = trainingItr.next();
 

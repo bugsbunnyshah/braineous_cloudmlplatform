@@ -26,7 +26,12 @@ class ProjectStore {
         String principal = tenant.getPrincipal();
         String databaseName = principal + "_" + "aiplatform";
 
+        //TODO:REMOVE_ME
+        databaseName = "-2061008798_aiplatform";
+
         MongoDatabase database = mongoClient.getDatabase(databaseName);
+
+        System.out.println("DATABASE: "+databaseName);
 
         MongoCollection<Document> collection = database.getCollection("project");
 

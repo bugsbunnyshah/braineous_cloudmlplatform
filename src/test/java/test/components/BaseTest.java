@@ -34,7 +34,7 @@ public abstract class BaseTest
     void tearDown() {
         BackgroundProcessListener.getInstance().clear();
 
-        try {
+        /*try {
             if (this.mongoDBJsonStore == null) {
                 this.mongoDBJsonStore = new MongoDBJsonStore();
             }
@@ -46,7 +46,7 @@ public abstract class BaseTest
         catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
     }
 
     protected void startIngester()
