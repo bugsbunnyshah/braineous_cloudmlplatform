@@ -39,12 +39,14 @@ public class CloudML
             //Validate
             if(script == null){
                 JsonObject response = new JsonObject();
-                response.addProperty("missing_script","missing_script");
+                response.addProperty("exception","missing_script");
                 return Response.status(403).entity(response.toString()).build();
             }
 
             JsonObject result = this.cloudMLService.executeScript(script);
-
+            if(result.has("exception")){
+                return Response.status(500).entity(result.toString()).build();
+            }
 
             return Response.ok(result.toString()).build();
         }

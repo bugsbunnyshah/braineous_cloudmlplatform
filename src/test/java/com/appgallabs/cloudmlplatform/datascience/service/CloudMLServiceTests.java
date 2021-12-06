@@ -42,7 +42,7 @@ public class CloudMLServiceTests {
 
         JsonObject json = this.cloudMLService.executeScript(script);
         JsonUtil.print(json);
-        assertEquals("START_EXECUTION\n",json.get("output").getAsString());
+        assertTrue(json.has("output"));
         assertTrue(json.has("exception"));
     }
 }
