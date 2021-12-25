@@ -46,6 +46,52 @@ Hence, the motivation for a cure. However, the Human Genome requires studying a 
 Braineous will incorporate ways to process this data in hours, something that usually takes months. The data processors will be generic and can be used on any dataset and not just
 the Human Genome.
 
+## Platform
+The project uses Quarkus,the Supersonic Subatomic Java Framework.
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Running the platform in development mode
+
+```
+mvn quarkus:dev
+```
+## Packaging and running the platform
+
+The platform can be packaged using
+````
+mvn clean package -Dquarkus.package.main-class=cloudmlplatform -DskipTests
+````
+
+It produces the `quarkus-run.jar` file in the `/target/quarkus-app` directory.
+
+The application is now runnable using
+
+````
+java -jar -Dquarkus.http.port=80 target/quarkus-app/quarkus-run.jar
+````
+
+Check if ML Platform is working
+````
+ curl http://localhost/ml/microservice
+ 
+ Response: {"product":"BRAINEOUS CloudML PLATFORM","oid":"2c6888a7-f783-4333-94cf-4e882f9b9efc","message":"HELLO_AI"}
+````
+
+Check if Data Platform is working
+````
+ curl http://localhost/data/microservice
+ 
+ Response: {"product":"BRAINEOUS DATA PLATFORM","oid":"4b1fab37-aeef-4846-ac25-f175714043c2","message":"HELLO_AI"}
+````
+
+## Swagger Documentation
+
+````
+ http://localhost/q/swagger-ui/
+````
+
+
+
 
 
 
