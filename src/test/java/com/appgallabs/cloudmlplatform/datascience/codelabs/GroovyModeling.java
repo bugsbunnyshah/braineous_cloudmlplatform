@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GroovyModeling {
     private static Logger logger = LoggerFactory.getLogger(GroovyModeling.class);
 
-    //@Test
+    @Test
     public void simpleScript() throws Exception{
         Binding context = new Binding();
         GroovyShell shell = new GroovyShell(Thread.currentThread().getContextClassLoader(),context);

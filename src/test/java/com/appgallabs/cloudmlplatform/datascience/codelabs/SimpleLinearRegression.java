@@ -207,7 +207,7 @@ public class SimpleLinearRegression {
         System.out.println(evaluation);
     }
 
-    //@Test
+    @Test
     public void representationWithFeatureCross() throws Exception{
         DataSet ds = readCSVDataset();
         ArrayList<DataSet> DataSetList = new ArrayList<>();
