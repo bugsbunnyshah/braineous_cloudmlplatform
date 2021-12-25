@@ -90,6 +90,24 @@ Check if Data Platform is working
  http://localhost/q/swagger-ui/
 ````
 
+## Status
+
+Active Branch
+````
+arjun: https://github.com/bugsbunnyshah/braineous_cloudmlstudio/tree/arjun
+````
+
+Release Type
+````
+GA/Production
+````
+
+Timeline
+````
+Jan 31, 2022
+````
+
+
 
 
 
