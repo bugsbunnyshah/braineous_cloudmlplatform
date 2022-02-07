@@ -57,7 +57,7 @@ import java.util.Random;
 public class SimpleLinearRegression {
     private static Logger logger = LoggerFactory.getLogger(SimpleLinearRegression.class);
 
-    @Test
+    //@Test
     public void syntheticData() throws Exception{
         int seed = 123;
         double learningRate = 0.008;
@@ -105,7 +105,7 @@ public class SimpleLinearRegression {
         JsonUtil.print(json);
     }
 
-    @Test
+    //@Test
     public void realData() throws Exception{
         String storedData = IOUtils.resourceToString("dataScience/realData.csv", StandardCharsets.UTF_8,
                 Thread.currentThread().getContextClassLoader());
@@ -150,7 +150,7 @@ public class SimpleLinearRegression {
         System.out.println(evaluation);
     }
 
-    @Test
+    //@Test
     public void validationData() throws Exception{
         String storedData = IOUtils.resourceToString("dataScience/california_housing_train.csv", StandardCharsets.UTF_8,
                 Thread.currentThread().getContextClassLoader());
@@ -207,7 +207,7 @@ public class SimpleLinearRegression {
         System.out.println(evaluation);
     }
 
-    @Test
+    //@Test
     public void representationWithFeatureCross() throws Exception{
         DataSet ds = readCSVDataset();
         ArrayList<DataSet> DataSetList = new ArrayList<>();

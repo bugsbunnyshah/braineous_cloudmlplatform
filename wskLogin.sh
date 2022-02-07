@@ -1,0 +1,1 @@
+ibmcloud login -a cloud.ibm.com

@@ -194,6 +194,12 @@
       <artifactId>json-flattener</artifactId>
       <version>0.9.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.nd4j</groupId>
+      <artifactId>python4j-numpy</artifactId>
+      <version>1.0.0-M1.1</version>
+    </dependency>
+
 
     <!-- Python support related -->
     <dependency>

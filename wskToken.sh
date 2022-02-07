@@ -1,0 +1,1 @@
+ibmcloud iam oauth-tokens > token

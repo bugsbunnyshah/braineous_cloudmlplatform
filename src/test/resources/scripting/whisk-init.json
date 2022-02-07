@@ -1,0 +1,8 @@
+{
+  "value": {
+    "name": "python-helloworld-with-params",
+    "main" : "main",
+    "binary" : false,
+    "code" : "def main(args): return {'payload': 'Hello ' + args.get('name') + ' from ' + args.get('place') + '!!!'}"
+  }
+}
