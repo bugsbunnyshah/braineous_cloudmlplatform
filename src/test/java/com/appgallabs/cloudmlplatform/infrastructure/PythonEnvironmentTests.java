@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.datavec.python.PythonGIL;
 
-@QuarkusTest
+//@QuarkusTest
 public class PythonEnvironmentTests {
     private static Logger logger = LoggerFactory.getLogger(PythonEnvironmentTests.class);
 
@@ -54,36 +54,5 @@ public class PythonEnvironmentTests {
                 //execute your code
             }
         }
-    }
-
-    @Test
-    public void executeOnWhisk() throws Exception{
-        String init = IOUtils.toString(Thread.currentThread().getContextClassLoader().
-                        getResourceAsStream("scripting/whisk-init.json"),
-                StandardCharsets.UTF_8);
-
-        String run = IOUtils.toString(Thread.currentThread().getContextClassLoader().
-                        getResourceAsStream("scripting/whisk-run.json"),
-                StandardCharsets.UTF_8);
-        //System.out.println(init);
-        //System.out.println(run);
-
-        String runUrl = "http://localhost:3233/api/v1/run";
-
-        HttpClient httpClient = http.getHttpClient();
-        HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
-        HttpRequest httpRequest = httpRequestBuilder.uri(new URI(runUrl))
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(run.toString()))
-                .build();
-
-
-        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        String responseJson = httpResponse.body();
-        int status = httpResponse.statusCode();
-        System.out.println(status);
-        System.out.println(httpResponse.toString());
-        System.out.println(httpResponse.headers());
-        System.out.println(responseJson);
     }
 }

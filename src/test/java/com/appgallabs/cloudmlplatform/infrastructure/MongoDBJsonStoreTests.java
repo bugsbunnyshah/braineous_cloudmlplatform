@@ -106,7 +106,7 @@ public class MongoDBJsonStoreTests extends BaseTest {
         assertTrue(dataSetIds.contains(dataSetId));
     }*/
 
-    @Test
+    //@Test
     public void testIngestion() throws Exception
     {
         String sourceSchema = IOUtils.toString(Thread.currentThread().getContextClassLoader().
