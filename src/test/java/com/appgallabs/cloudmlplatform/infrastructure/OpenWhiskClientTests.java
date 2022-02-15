@@ -142,10 +142,8 @@ public class OpenWhiskClientTests {
     private void act(String bearerToken,String action) throws Exception{
         String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?blocking=false&result=true";
 
-        JsonObject payload = new JsonObject();
-        payload.addProperty("name","wskapp_input");
 
-        String body = payload.toString();
+        String body = "";
         HttpClient httpClient = HttpClient.newBuilder().build();
         HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
         HttpRequest httpRequest = httpRequestBuilder.uri(new URI(restUrl))
@@ -162,7 +160,7 @@ public class OpenWhiskClientTests {
     }
 
     private void readActivation(String activation) throws Exception{
-        Thread.sleep(4777);
+        Thread.sleep(10000);
 
         //activation = "602843320781482ea843320781382e19";
         String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/activations/"+activation;

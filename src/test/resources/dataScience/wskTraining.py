@@ -3,11 +3,18 @@ import math
 import pandas as pd
 import tensorflow as tf
 from matplotlib import pyplot as plt
+from io import StringIO
 import random
 
+
+data = "flight_status,departure_airport,departure_scheduled,departure_estimated\n0.0,564165195,1314664959,1314664959"
+dataset = StringIO("""flight_status,departure_airport,departure_scheduled,departure_estimated
+    0.0,564165195,1314664959,1314664959
+    """)
+
+
 def main(args):
-    return {'payload': 'Hello-AI_Training7----' + args.get('name') + '!!!'}
-    #return {'payload': 'Hello '}
+    return {'payload': 'Hello-AI_Training8'+data}
 
 #@title Define the functions that build and train a model
 #@title Define the functions that build and train a model
@@ -116,18 +123,18 @@ pd.options.display.max_rows = 10
 pd.options.display.float_format = "{:.1f}".format
 
 # Import the dataset.
-#training_df = pd.read_csv("./networkPredictionDataSet.csv")
-
-# Scale the label.
-#training_df["median_house_value"] /= 1000.0
+training_df = pd.read_csv(dataset, sep=";")
 
 # Print the first rows of the pandas DataFrame.
-#training_df.head()
+training_df.head()
 
 # Get statistics on the dataset.
-#training_df.describe()
+training_df.describe()
 
-#training_df[training_df.columns[0:2]]
+training_df[training_df.columns[0:2]]
+
+print("********TRAINING_DATA********")
+print(training_df)
 
 
 # The following variables are the hyperparameters.
@@ -149,6 +156,7 @@ my_model = None
 my_model = build_model(learning_rate)
 print(my_model)
 
+#train
 #weight, bias, epochs, rmse = train_model(my_model, training_df,
 #                                         my_feature, my_label,
 #                                         epochs, batch_size)
