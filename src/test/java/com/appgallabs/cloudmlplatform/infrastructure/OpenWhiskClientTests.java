@@ -68,6 +68,48 @@ public class OpenWhiskClientTests {
     }
 
     @Test
+    public void executeWskTrainingApp() throws Exception{
+        //Get Token
+        String data = FileUtils.readFileToString(new File("./token"), StandardCharsets.UTF_8);
+        int startIndex = data.indexOf("B");
+        String bearerToken = data.substring(startIndex).trim();
+        System.out.println(bearerToken);
+
+
+        String action = "wskTrainingApp";
+        String code = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("dataScience/wskTraining.py"),
+                StandardCharsets.UTF_8);
+        String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?overwrite=true";
+        JsonObject json = new JsonObject();
+        json.addProperty("namespace","_");
+        json.addProperty("name",action);
+        JsonObject exec = new JsonObject();
+        exec.addProperty("kind","blackbox");
+        exec.addProperty("image","slydogshah/action-python-v3.6-ai");
+        exec.addProperty("code",code);
+        json.add("exec",exec);
+
+        String payload = json.toString();
+
+
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
+        HttpRequest httpRequest = httpRequestBuilder.uri(new URI(restUrl))
+                //.headers("X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e", "Authorization",bearerToken,"Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization",bearerToken,"X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e")
+                .PUT(HttpRequest.BodyPublishers.ofString(payload))
+                .build();
+
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        logger.info(httpResponse.statusCode()+"");
+        JsonElement response = JsonParser.parseString(httpResponse.body());
+        JsonUtil.printStdOut(response);
+        assertEquals(200,httpResponse.statusCode());
+
+        this.act(bearerToken,action);
+    }
+
+    @Test
     public void updateWskApp() throws Exception{
         String action = "noOp";
 
@@ -120,9 +162,9 @@ public class OpenWhiskClientTests {
     }
 
     private void readActivation(String activation) throws Exception{
-        Thread.sleep(10000);
+        Thread.sleep(4777);
 
-        //activation = "c0082db281bd4cb2882db281bd5cb2c5";
+        //activation = "602843320781482ea843320781382e19";
         String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/activations/"+activation;
 
         String data = FileUtils.readFileToString(new File("./token"), StandardCharsets.UTF_8);
