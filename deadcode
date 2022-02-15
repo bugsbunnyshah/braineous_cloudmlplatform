@@ -1,0 +1,9 @@
+/*RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization",bearerToken);
+        headers.add("X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e");
+        HttpEntity<String> request = new HttpEntity<>(body,headers);
+        System.out.println(request);
+        String response
+                = restTemplate.postForObject(restUrl, request, String.class);
+        System.out.println(response);*/
