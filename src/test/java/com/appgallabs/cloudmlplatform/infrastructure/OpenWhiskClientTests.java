@@ -160,7 +160,7 @@ public class OpenWhiskClientTests {
     }
 
     private void readActivation(String activation) throws Exception{
-        Thread.sleep(10000);
+        Thread.sleep(15000);
 
         //activation = "602843320781482ea843320781382e19";
         String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/activations/"+activation;
