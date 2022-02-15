@@ -179,10 +179,16 @@ public class OpenWhiskClientTests {
                 .build();
 
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        logger.info(httpResponse.statusCode()+"");
-        JsonElement json = JsonParser.parseString(httpResponse.body());
-        JsonUtil.printStdOut(json);
         assertEquals(200,httpResponse.statusCode());
+        logger.info(httpResponse.statusCode()+"");
+
+
+        JsonObject json = JsonParser.parseString(httpResponse.body()).getAsJsonObject();
+        //JsonUtil.printStdOut(json);
+
+        String message = json.get("response").getAsJsonObject().get("result").getAsJsonObject().get("message").getAsString();
+        logger.info("MESSAGE");
+        logger.info(message);
     }
 
     @Test
@@ -228,7 +234,7 @@ public class OpenWhiskClientTests {
 
         HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         logger.info(httpResponse.statusCode()+"");
-        JsonElement json = JsonParser.parseString(httpResponse.body());
+        JsonObject json = JsonParser.parseString(httpResponse.body()).getAsJsonObject();
         JsonUtil.printStdOut(json);
         assertEquals(200,httpResponse.statusCode());
 

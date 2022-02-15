@@ -1,10 +1,8 @@
 #@title Import relevant modules
-import math
 import pandas as pd
 import tensorflow as tf
 from matplotlib import pyplot as plt
 from io import StringIO
-import random
 
 dataset = StringIO("""flight_status,departure_airport,departure_scheduled,departure_estimated
         0.0,564165195,1314664959,1314664959
@@ -111,7 +109,54 @@ dataset = StringIO("""flight_status,departure_airport,departure_scheduled,depart
 
 
 def main(args):
-    return {'payload': 'Hello-AI_Training8'}
+    # The following lines adjust the granularity of reporting.
+    pd.options.display.max_rows = 10
+    pd.options.display.float_format = "{:.1f}".format
+
+    # Import the dataset.
+    #training_df = pd.read_csv("./wskTraining.csv")
+    training_df = pd.read_csv(dataset, sep=",")
+
+    # Print the first rows of the pandas DataFrame.
+    training_df.head()
+
+    # Get statistics on the dataset.
+    training_df.describe()
+
+    training_df[training_df.columns[0:2]]
+
+    #print("********TRAINING_DATA********")
+    #print(training_df)
+
+    # The following variables are the hyperparameters.
+    learning_rate = 0.001
+    epochs = 300
+    batch_size = 30
+
+    # Specify the feature and the label.
+    my_feature = ["departure_airport"] # the total number of rooms on a specific city block.
+    my_label="flight_status" # the median value of a house on a specific city block.
+    # That is, you're going to create a model that predicts house value based
+    # solely on total_rooms.
+
+    # Discard any pre-existing version of the model.
+    my_model = None
+
+
+    # Invoke the functions.
+    my_model = build_model(learning_rate)
+    #print(my_model)
+
+    #train
+    weight, bias, epochs, rmse = train_model(my_model, training_df,
+                                             my_feature, my_label,
+                                             epochs, batch_size)
+
+    #print("WEIGHT: ",weight)
+    #print("BIAS: ",bias)
+
+
+    return {'message': "TRAINED"}
 
 #@title Define the functions that build and train a model
 #@title Define the functions that build and train a model
@@ -214,50 +259,8 @@ def plot_the_loss_curve(epochs, rmse):
     plt.ylim([rmse.min()*0.97, rmse.max()])
     plt.show()
 
-#-----------------------------------------------------------------------------
-# The following lines adjust the granularity of reporting.
-pd.options.display.max_rows = 10
-pd.options.display.float_format = "{:.1f}".format
-
-# Import the dataset.
-#training_df = pd.read_csv("./wskTraining.csv")
-training_df = pd.read_csv(dataset, sep=",")
-
-# Print the first rows of the pandas DataFrame.
-training_df.head()
-
-# Get statistics on the dataset.
-training_df.describe()
-
-training_df[training_df.columns[0:2]]
-
-print("********TRAINING_DATA********")
-print(training_df)
 
 
-# The following variables are the hyperparameters.
-learning_rate = 0.001
-epochs = 300
-batch_size = 30
-
-# Specify the feature and the label.
-my_feature = ["departure_airport"] # the total number of rooms on a specific city block.
-my_label="flight_status" # the median value of a house on a specific city block.
-# That is, you're going to create a model that predicts house value based
-# solely on total_rooms.
-
-# Discard any pre-existing version of the model.
-my_model = None
+#print(main("test"))
 
 
-# Invoke the functions.
-my_model = build_model(learning_rate)
-print(my_model)
-
-#train
-weight, bias, epochs, rmse = train_model(my_model, training_df,
-                                         my_feature, my_label,
-                                         epochs, batch_size)
-
-print("WEIGHT: ",weight)
-print("BIAS: ",bias)
