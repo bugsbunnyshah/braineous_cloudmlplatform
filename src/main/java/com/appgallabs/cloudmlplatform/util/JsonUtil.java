@@ -60,4 +60,13 @@ public class JsonUtil {
                 .printHexBinary(digest).toUpperCase();
         return myHash;
     }
+
+    public static void printStdOut(JsonElement jsonElement)
+    {
+        if(jsonElement.isJsonArray())
+        {
+            System.out.println("******ARRAY_SIZE: "+jsonElement.getAsJsonArray().size()+"**********");
+        }
+        System.out.println(gson.toJson(jsonElement));
+    }
 }

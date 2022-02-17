@@ -64,7 +64,7 @@ public class OpenWhiskClientTests {
         JsonUtil.printStdOut(response);
         assertEquals(200,httpResponse.statusCode());
 
-        this.act(bearerToken,action);
+        this.act(bearerToken,action, "wsk");
     }
 
     @Test
@@ -109,39 +109,8 @@ public class OpenWhiskClientTests {
         this.act(bearerToken,action);
     }
 
-    @Test
-    public void updateWskApp() throws Exception{
-        String action = "noOp";
-
-        String data = FileUtils.readFileToString(new File("./token"), StandardCharsets.UTF_8);
-        int startIndex = data.indexOf("B");
-        String bearerToken = data.substring(startIndex).trim();
-        System.out.println(bearerToken);
-
-        String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?overwrite=true";
-
-        String payload = "{\"namespace\":\"_\",\"name\":\"noOp\",\"exec\":{\"kind\":\"blackbox\",\"code\":\"def main(args):\\n    return {\\\"body\\\": \\\"action\\\"}\",\"image\":\"slydogshah/action-python-v3.6-ai\"}}";
-
-        HttpClient httpClient = HttpClient.newBuilder().build();
-        HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
-        HttpRequest httpRequest = httpRequestBuilder.uri(new URI(restUrl))
-                //.headers("X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e", "Authorization",bearerToken,"Content-Type", "application/json")
-                .headers("Content-Type", "application/json","Authorization",bearerToken,"X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e")
-                .PUT(HttpRequest.BodyPublishers.ofString(payload))
-                .build();
-
-        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        logger.info(httpResponse.statusCode()+"");
-        JsonElement json = JsonParser.parseString(httpResponse.body());
-        JsonUtil.printStdOut(json);
-        assertEquals(200,httpResponse.statusCode());
-
-        this.act(bearerToken,action);
-    }
-
     private void act(String bearerToken,String action) throws Exception{
         String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?blocking=false&result=true";
-
 
         String body = "";
         HttpClient httpClient = HttpClient.newBuilder().build();
@@ -157,6 +126,27 @@ public class OpenWhiskClientTests {
         JsonUtil.printStdOut(json);
 
         this.readActivation(json.get("activationId").getAsString());
+    }
+
+    private void act(String bearerToken,String action, String parameter) throws Exception{
+        String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?blocking=false&result=true";
+
+        JsonObject json = new JsonObject();
+        json.addProperty("name", parameter);
+        String body = json.toString();
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
+        HttpRequest httpRequest = httpRequestBuilder.uri(new URI(restUrl))
+                .headers("Content-Type", "application/json","Authorization",bearerToken,"X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        logger.info(httpResponse.statusCode()+"");
+        JsonObject resp = JsonParser.parseString(httpResponse.body()).getAsJsonObject();
+        JsonUtil.printStdOut(resp);
+
+        this.readActivation(resp.get("activationId").getAsString());
     }
 
     private void readActivation(String activation) throws Exception{
@@ -184,11 +174,11 @@ public class OpenWhiskClientTests {
 
 
         JsonObject json = JsonParser.parseString(httpResponse.body()).getAsJsonObject();
-        //JsonUtil.printStdOut(json);
+        JsonUtil.printStdOut(json);
 
-        String message = json.get("response").getAsJsonObject().get("result").getAsJsonObject().get("message").getAsString();
+        /*String message = json.get("response").getAsJsonObject().get("result").getAsJsonObject().get("message").getAsString();
         logger.info("MESSAGE");
-        logger.info(message);
+        logger.info(message);*/
     }
 
     @Test
@@ -239,5 +229,35 @@ public class OpenWhiskClientTests {
         assertEquals(200,httpResponse.statusCode());
 
         //this.act(bearerToken);
+    }
+
+    //@Test
+    public void updateWskApp() throws Exception{
+        String action = "noOp";
+
+        String data = FileUtils.readFileToString(new File("./token"), StandardCharsets.UTF_8);
+        int startIndex = data.indexOf("B");
+        String bearerToken = data.substring(startIndex).trim();
+        System.out.println(bearerToken);
+
+        String restUrl = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/_/actions/"+action+"?overwrite=true";
+
+        String payload = "{\"namespace\":\"_\",\"name\":\"noOp\",\"exec\":{\"kind\":\"blackbox\",\"code\":\"def main(args):\\n    return {\\\"body\\\": \\\"action\\\"}\",\"image\":\"slydogshah/action-python-v3.6-ai\"}}";
+
+        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpRequest.Builder httpRequestBuilder = HttpRequest.newBuilder();
+        HttpRequest httpRequest = httpRequestBuilder.uri(new URI(restUrl))
+                //.headers("X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e", "Authorization",bearerToken,"Content-Type", "application/json")
+                .headers("Content-Type", "application/json","Authorization",bearerToken,"X-Namespace-Id","34f9adfd-d4c1-4674-ae2d-ae772a0f967e")
+                .PUT(HttpRequest.BodyPublishers.ofString(payload))
+                .build();
+
+        HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        logger.info(httpResponse.statusCode()+"");
+        JsonElement json = JsonParser.parseString(httpResponse.body());
+        JsonUtil.printStdOut(json);
+        assertEquals(200,httpResponse.statusCode());
+
+        this.act(bearerToken,action);
     }
 }

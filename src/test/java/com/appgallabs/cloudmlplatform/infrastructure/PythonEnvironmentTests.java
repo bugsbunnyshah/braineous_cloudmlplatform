@@ -14,45 +14,29 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
 import org.datavec.python.PythonGIL;
 
-//@QuarkusTest
+@QuarkusTest
 public class PythonEnvironmentTests {
     private static Logger logger = LoggerFactory.getLogger(PythonEnvironmentTests.class);
 
     @Inject
     private PythonEnvironment pythonEnvironment;
 
-    @Inject
-    private Http http;
-
-    //@Test
-    public void executeScript() throws Exception{
-        String pythonScript = IOUtils.toString(Thread.currentThread().getContextClassLoader().
-                        getResourceAsStream("scripting/helloJPype.py"),
+    @Test
+    public void executeTraining() throws Exception{
+        String code = IOUtils.toString(Thread.currentThread().getContextClassLoader().getResourceAsStream("dataScience/wskTraining.py"),
                 StandardCharsets.UTF_8);
 
-        this.pythonEnvironment.executeScript(pythonScript);
+        String action = UUID.randomUUID().toString();
+        String activationId = this.pythonEnvironment.executeTraining(action,code);
 
-        Thread.sleep(30000);
-    }
+        //int waitTime = 300000;
+        //int waitTime = 15000;
+        //Thread.sleep(waitTime);
 
-    //@Test
-    public void executePython() throws Exception{
-        System.setProperty("org.eclipse.python4j.path.append","/Users/babyboy/.pyenv/versions/3.10.1/lib/python3.10/lib-dynload");
-        System.out.println(System.getProperty("org.eclipse.python4j.path.append"));
-
-        String command = "python3 findpython.py";
-        Process process = Runtime.getRuntime().exec(command);
-        String result = IOUtils.toString(process.getInputStream(),StandardCharsets.UTF_8);
-        System.out.println(result);
-
-
-        try(PythonGIL pythonGIL = PythonGIL.lock()) {
-            try(PythonGC gc = PythonGC.watch()) {
-                //execute your code
-            }
-        }
+        //this.pythonEnvironment.readActivation(activationId);
     }
 }
